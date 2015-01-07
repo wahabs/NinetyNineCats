@@ -1,0 +1,8 @@
+<h1>All Requests</h1>
+<ul>
+  <% @cat_rental_requests.each do |request| %>
+  <li><%= [request.start_date, request.end_date].join(', ') %></li>
+  <% end %>
+</ul>
+<br>
+<a href="<%= new_cat_rental_request_url %>">Request a cat!</a>

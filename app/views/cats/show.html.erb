@@ -1,0 +1,35 @@
+<h1><%= @cat.name %> </h1>
+
+<h2>Data</h2>
+<table>
+  <tr>
+    <th>Attributes</th>
+    <th align="right">Values</th>
+  </tr>
+  <% @cat.attributes.each do |key, value| %>
+    <tr>
+      <td><%= (key == "birth_date") ? "age" : key %></td>
+      <td align="right"><%= (key == "birth_date") ? @cat.age : value %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Requests</h2>
+<table>
+  <tr><th>Start Date</th>
+      <th>End Date</th>
+      <th>Status </th>
+  </tr>
+  <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+  <tr>
+    <td><%= request.start_date %></td>
+    <td><%= request.end_date %></td>
+    <td><%= request.status %> </td>
+    <td><%= button_to "Approve", cat_rental_request_url(request) + "/approve", method: :post %></td>
+    <td><%= button_to "Deny", cat_rental_request_url(request) + "/deny", method: :post %></td>
+  </tr>
+  <% end %>
+</table>
+
+<a href="<%=edit_cat_url(@cat)%>" >Edit Cat</a>
+<a href="<%=cats_url%>" >Back to Cats</a>
