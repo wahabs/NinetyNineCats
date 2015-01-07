@@ -2,6 +2,12 @@ class CatRentalRequest < ActiveRecord::Base
   STATUS_STATES = %w(APPROVED DENIED PENDING)
 
   belongs_to :cat
+  belongs_to(
+    :requester,
+    class_name: 'User',
+    foreign_key: :user_id,
+    primary_key: :id
+  )
 
   after_initialize :assign_pending_status
 
@@ -15,6 +21,7 @@ class CatRentalRequest < ActiveRecord::Base
   validates :status, inclusion: STATUS_STATES
   validate :start_must_come_before_end
   validate :does_not_overlap_approved_request
+  validates :user_id, presence: true
 
   def approve!
     raise "not pending" unless self.status == "PENDING"

@@ -11,6 +11,13 @@ class Cat < ActiveRecord::Base
     dependent: :destroy
   )
 
+  belongs_to(
+    :owner,
+    class_name: 'User',
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+
   validates(
     :birth_date,
     :color,
@@ -18,6 +25,7 @@ class Cat < ActiveRecord::Base
     :sex,
     presence: true
   )
+
 
   validates :color, inclusion: CAT_COLORS
   validates :sex, inclusion: %w(M F)

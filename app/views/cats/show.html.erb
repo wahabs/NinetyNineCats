@@ -13,7 +13,9 @@
   <% end %>
 </table>
 
-<%= link_to "Edit #{@cat.name}", edit_cat_url(@cat) %>
+<% if @cat.owner == current_user %>
+  <%= link_to "Edit #{@cat.name}", edit_cat_url(@cat) %>
+<% end  %>
 
 <h2>Rental Requests</h2>
 <table>
@@ -21,8 +23,9 @@
     <th>Start Date</th>
     <th>End Date</th>
     <th>Status</th>
+    <th>Requested By</th>
   </tr>
   <% @cat.rental_requests.order("start_date").each do |req| %>
-    <%= render "req_tr", req: req %>
+    <%= render "req_tr", req: req , cat: @cat%>
   <% end %>
 </table>

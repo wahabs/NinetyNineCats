@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'coffee-rails', '~> 4.0.0'
+gem 'bcrypt'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'pg'
@@ -14,4 +15,5 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
+  gem 'pry-rails'
 end
