@@ -7,13 +7,19 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%= link_to "99 Cats", cats_url %>
+<br>
+<br>
 <% if current_user.nil? %>
   <%= link_to "Log in", new_session_url %>
+  <br>
   <%= link_to "Sign Up", new_user_url %>
 <% else %>
   <%= link_to "#{current_user.user_name}", user_url %>
+  <br>
   <%= link_to "Log out", session_url, method: :delete %>
 <% end %>
+
 <%= yield %>
 
 </body>
