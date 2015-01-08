@@ -6,16 +6,23 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return nil if session[:session_token].nil?
-    @current_user ||= User.find_by(session_token: session[:session_token])
+    @current_user ||= begin
+      sess = Session.find_by_token(session[:session_token])
+      if sess
+        sess.user
+      else
+        nil
+      end
+    end
   end
 
   def log_in!(user)
-    user.reset_session_token!
-    session[:session_token] = user.session_token
+    new_session = Session.create!(token: SecureRandom::urlsafe_base64, user_id: user.id)
+    session[:session_token] = new_session.token
   end
 
   def log_out!
-    current_user.reset_session_token!
+    Session.find_by_token(session[:session_token]).destroy
     session[:session_token] = nil
   end
 
