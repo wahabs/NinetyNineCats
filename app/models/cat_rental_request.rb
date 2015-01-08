@@ -21,6 +21,7 @@ class CatRentalRequest < ActiveRecord::Base
   validates :status, inclusion: STATUS_STATES
   validate :start_must_come_before_end
   validate :does_not_overlap_approved_request
+  validate :owner_does_not_request_own_cat
   validates :user_id, presence: true
 
   def approve!
@@ -160,5 +161,11 @@ SQL
     return if start_date < end_date
     errors[:start_date] << "must come before end date"
     errors[:end_date] << "must come after start date"
+  end
+
+  def owner_does_not_request_own_cat
+    if requester == cat.owner
+      errors[:base] << "cannot request own cat"
+    end
   end
 end

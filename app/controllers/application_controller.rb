@@ -8,11 +8,12 @@ class ApplicationController < ActionController::Base
     return nil if session[:session_token].nil?
     @current_user ||= begin
       sess = Session.find_by_token(session[:session_token])
-      if sess
-        sess.user
-      else
-        nil
-      end
+      sess ? sess.user : nil
+      # if sess
+      #   sess.user
+      # else
+      #   nil
+      # end
     end
   end
 

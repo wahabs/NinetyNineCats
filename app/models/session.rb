@@ -1,7 +1,4 @@
 class Session < ActiveRecord::Base
-  validates :token, presence: true
-  # after_initialize :ensure_session_token
+  validates :token, :user_id, presence: true
   belongs_to :user
-
-
 end
